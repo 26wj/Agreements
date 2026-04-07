@@ -3,20 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modern Animated Website</title>
+    <title>GameTrade Pro - Terms of Service</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         :root {
             --primary: #7b2cbf;
             --secondary: #c77dff;
             --accent: #e0aaff;
             --text: #f8f9fa;
+            --success: #00b894;
+            --warning: #fdcb6e;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            cursor: none;
         }
 
         body {
@@ -34,9 +36,14 @@
             border: 2px solid var(--accent);
             border-radius: 50%;
             pointer-events: none;
-            transition: transform 0.3s, opacity 0.3s;
+            transition: transform 0.1s, opacity 0.1s;
             mix-blend-mode: difference;
             z-index: 9999;
+            display: none;
+        }
+
+        .custom-cursor.active {
+            display: block;
         }
 
         .terms-container {
@@ -50,11 +57,37 @@
             transform: translateY(0);
         }
 
+        .terms-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .terms-header i {
+            font-size: 2rem;
+            color: var(--accent);
+        }
+
         .terms-content {
             max-height: 60vh;
             overflow-y: auto;
             padding: 1rem;
             line-height: 1.6;
+        }
+
+        .terms-content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .terms-content::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+
+        .terms-content::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 4px;
         }
 
         .agree-button {
@@ -68,6 +101,103 @@
             transition: transform 0.3s, box-shadow 0.3s;
             position: relative;
             overflow: hidden;
+            cursor: pointer;
+        }
+
+        .agree-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(123, 44, 191, 0.4);
+        }
+
+        .agree-button:active {
+            transform: translateY(0);
+        }
+
+        /* Party Watch Section */
+        .party-watch-section {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            border: 1px solid rgba(224, 170, 255, 0.3);
+        }
+
+        .party-watch-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .party-watch-header i {
+            font-size: 1.5rem;
+            color: var(--warning);
+        }
+
+        .watch-status {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(0, 184, 148, 0.2);
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            background: var(--success);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .watch-controls {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .watch-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .watch-btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .watch-btn-primary:hover {
+            background: var(--secondary);
+        }
+
+        .watch-btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text);
+        }
+
+        .watch-btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
         }
 
         .success-screen {
@@ -80,6 +210,7 @@
             place-items: center;
             background: rgba(0, 0, 0, 0.9);
             backdrop-filter: blur(10px);
+            z-index: 1000;
         }
 
         .success-content {
@@ -87,15 +218,15 @@
             animation: scaleUp 0.5s ease-out;
         }
 
+        .success-icon {
+            font-size: 5rem;
+            color: var(--success);
+            animation: float 3s infinite;
+        }
+
         @keyframes float {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-20px); }
-        }
-
-        @keyframes cursorAnim {
-            0% { transform: scale(1); }
-            50% { transform: scale(0.5); }
-            100% { transform: scale(1); }
         }
 
         @keyframes scaleUp {
@@ -124,11 +255,17 @@
             }
 
             .custom-cursor {
-                display: none;
+                display: none !important;
             }
 
-            * {
-                cursor: default;
+            .terms-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .watch-status {
+                flex-direction: column;
+                align-items: flex-start;
             }
         }
     </style>
@@ -137,7 +274,10 @@
     <div class="custom-cursor"></div>
 
     <div class="terms-container">
-        <h1>Welcome to GameTrade Pro🌟</h1>
+        <div class="terms-header">
+            <i class="fas fa-shield-halved"></i>
+            <h1>Welcome to GameTrade Pro</h1>
+        </div>
         <div class="terms-content">
             <h2>Terms of Service</h2>
              <p>This Terms of Service Agreement ("Agreement") is a legally binding contract between you ("User") and Elite PUBG ("Company"). By accessing and using our website and services, you agree to be bound by this Agreement, and any amendments or modifications made by us at any time. Your continued use of the site signifies your acceptance of all the terms and conditions set forth herein, even if you do not read every detail in its entirety.</p>
@@ -240,24 +380,58 @@
       
             <!-- Add more content -->
         </div>
+        
+        <!-- Party Watch Section -->
+        <div class="party-watch-section">
+            <div class="party-watch-header">
+                <i class="fas fa-eye"></i>
+                <h2>Party Watch</h2>
+            </div>
+            <div class="watch-status">
+                <div class="status-indicator">
+                    <span class="status-dot"></span>
+                    <span>Active Monitoring</span>
+                </div>
+            </div>
+            <div class="watch-controls">
+                <button class="watch-btn watch-btn-primary">
+                    <i class="fas fa-play"></i>
+                    Start Watch
+                </button>
+                <button class="watch-btn watch-btn-secondary">
+                    <i class="fas fa-pause"></i>
+                    Pause
+                </button>
+                <button class="watch-btn watch-btn-secondary">
+                    <i class="fas fa-stop"></i>
+                    Stop
+                </button>
+            </div>
+        </div>
+
         <button class="agree-button">I Agree</button>
     </div>
 
     <div class="success-screen">
         <div class="success-content">
-            <div style="font-size: 5rem; animation: float 3s infinite">🎉</div>
+            <i class="fas fa-circle-check success-icon"></i>
             <h1 style="margin: 2rem 0">Now You Can Move Forward with the Deal!</h1>
-            <button class="agree-button" onclick="location.reload()">Go Back</button>
+            <button class="agree-button" id="go-back-btn">Go Back</button>
         </div>
     </div>
 
     <script>
-        // Custom cursor
+        // Custom cursor - only enabled on desktop with mouse
         const cursor = document.querySelector('.custom-cursor');
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-        });
+        const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+        
+        if (!isTouchDevice && window.innerWidth > 768 && cursor) {
+            cursor.classList.add('active');
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+            });
+        }
 
         // Button click effect
         document.querySelectorAll('.agree-button').forEach(button => {
@@ -271,17 +445,59 @@
 
                 // Handle agreement
                 if(button.textContent === 'I Agree') {
-                    document.querySelector('.terms-container').style.display = 'none';
-                    document.querySelector('.success-screen').style.display = 'grid';
+                    const termsContainer = document.querySelector('.terms-container');
+                    const successScreen = document.querySelector('.success-screen');
+                    if (termsContainer) termsContainer.style.display = 'none';
+                    if (successScreen) successScreen.style.display = 'grid';
                 }
 
                 setTimeout(() => ripple.remove(), 600);
             });
         });
 
-        // Mobile detection
-        if (window.innerWidth <= 768) {
-            cursor.style.display = 'none';
+        // Go back button handler
+        const goBackBtn = document.getElementById('go-back-btn');
+        if (goBackBtn) {
+            goBackBtn.addEventListener('click', () => {
+                location.reload();
+            });
+        }
+
+        // Party Watch functionality
+        let partyWatchActive = false;
+        const startWatchBtn = document.querySelector('.watch-btn-primary');
+        const pauseWatchBtn = document.querySelectorAll('.watch-btn-secondary')[0];
+        const stopWatchBtn = document.querySelectorAll('.watch-btn-secondary')[1];
+        const statusIndicator = document.querySelector('.status-indicator');
+        const statusDot = document.querySelector('.status-dot');
+        const statusText = statusIndicator ? statusIndicator.querySelector('span:last-child') : null;
+
+        if (startWatchBtn) {
+            startWatchBtn.addEventListener('click', () => {
+                partyWatchActive = true;
+                if (statusIndicator) statusIndicator.style.background = 'rgba(0, 184, 148, 0.2)';
+                if (statusDot) statusDot.style.background = '#00b894';
+                if (statusText) statusText.textContent = 'Active Monitoring';
+            });
+        }
+
+        if (pauseWatchBtn) {
+            pauseWatchBtn.addEventListener('click', () => {
+                if (partyWatchActive) {
+                    if (statusIndicator) statusIndicator.style.background = 'rgba(253, 203, 110, 0.2)';
+                    if (statusDot) statusDot.style.background = '#fdcb6e';
+                    if (statusText) statusText.textContent = 'Paused';
+                }
+            });
+        }
+
+        if (stopWatchBtn) {
+            stopWatchBtn.addEventListener('click', () => {
+                partyWatchActive = false;
+                if (statusIndicator) statusIndicator.style.background = 'rgba(255, 255, 255, 0.1)';
+                if (statusDot) statusDot.style.background = '#ffffff';
+                if (statusText) statusText.textContent = 'Stopped';
+            });
         }
     </script>
 </body>
